@@ -50,4 +50,5 @@ jobs:
           context: .
           push: true
           tags: ${{ env.IMAGE_REF }}
+          build-args: GIT_SHA=${{ github.sha }}
           labels: org.opencontainers.image.source=https://github.com/${{ github.repository }}

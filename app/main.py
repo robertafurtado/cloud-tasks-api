@@ -8,7 +8,7 @@ DB_PATH = os.environ.get("DB_PATH", "/tmp/cloud_tasks.db")
 
 def create_app(test_config=None):
     app = Flask(__name__)
-    app.config.update(DATABASE=DB_PATH)
+    app.config.update(DATABASE=DB_PATH, APP_VERSION=os.environ.get("APP_VERSION", "dev"))
     if test_config:
         app.config.update(test_config)
 
@@ -25,7 +25,11 @@ def create_app(test_config=None):
 
     @app.get("/")
     def index():
-        return jsonify(service="cloud-tasks-api", message="API de tarefas em nuvem", endpoints=["/health", "/tasks"])
+        return jsonify(service="cloud-tasks-api", message="API de tarefas em nuvem", endpoints=["/health", "/tasks", "/version"])
+
+    @app.get("/version")
+    def version():
+        return jsonify(service="cloud-tasks-api", commit=app.config["APP_VERSION"])
 
     @app.get("/health")
     def health():

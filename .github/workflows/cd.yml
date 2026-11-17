@@ -35,4 +35,7 @@ jobs:
       - name: Verify remote endpoint
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
-        run: curl --fail --show-error --retry 10 --retry-delay 3 --retry-all-errors "http://${EC2_HOST}/health"
+          DEPLOY_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          curl --fail --show-error --retry 10 --retry-delay 3 --retry-all-errors "http://${EC2_HOST}/health"
+          curl --fail --show-error "http://${EC2_HOST}/version" | grep "$DEPLOY_SHA"

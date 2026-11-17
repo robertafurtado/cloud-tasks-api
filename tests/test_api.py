@@ -48,3 +48,16 @@ def test_delete_task(client):
 
 def test_delete_not_found(client):
     assert client.delete("/tasks/999").status_code == 404
+
+
+def test_version(tmp_path, monkeypatch):
+    monkeypatch.setenv("APP_VERSION", "abc123")
+    app = create_app({"TESTING": True, "DATABASE": str(tmp_path / "test.db")})
+    result = app.test_client().get("/version")
+    assert result.status_code == 200
+    assert result.json["commit"] == "abc123"
+
+
+def test_version_dev(client, monkeypatch):
+    monkeypatch.delenv("APP_VERSION", raising=False)
+    assert client.get("/version").json["commit"] == "dev"

@@ -1,0 +1,6 @@
+$ curl -X POST http://34.206.31.13/tasks -H 'Content-Type: application/json' -d '{"title":"apagar depois"}'
+{"done":false,"id":1,"title":"apagar depois"}
+$ curl -i -X DELETE http://34.206.31.13/tasks/1
+HTTP/1.1 204 NO CONTENT
+$ curl -i -X DELETE http://34.206.31.13/tasks/1
+HTTP/1.1 404 NOT FOUND

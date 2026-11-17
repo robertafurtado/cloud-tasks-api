@@ -1,0 +1,19 @@
+$ bash scripts/deploy.sh ghcr.io/teste/cloud-tasks-api:v1
+Deploy succeeded: ghcr.io/teste/cloud-tasks-api:v1
+
+$ curl -X POST localhost:8099/tasks -H 'Content-Type: application/json' -d '{"title":"teste rollback"}'
+{"done":false,"id":1,"title":"teste rollback"}
+
+$ bash scripts/deploy.sh ghcr.io/teste/cloud-tasks-api:quebrada
+Deploy falhou, voltando para a versao anterior: ghcr.io/teste/cloud-tasks-api:v1
+Rollback ok: ghcr.io/teste/cloud-tasks-api:v1
+
+$ docker ps --format '{{.Image}} {{.Status}}'
+ghcr.io/teste/cloud-tasks-api:v1 Up 2 seconds
+
+$ curl localhost:8099/tasks
+[{"done":false,"id":1,"title":"teste rollback"}]
+
+$ curl localhost:8099/version
+{"commit":"v1","service":"cloud-tasks-api"}
+

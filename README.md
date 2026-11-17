@@ -3,7 +3,7 @@
 Aplicação Flask/SQLite preparada para um laboratório de **CI/CD com GitHub Actions, Docker, GHCR e AWS EC2**. A base contém código, testes e workflows; cabe ao grupo aprovisionar a nuvem, configurar segredos, usar branches/PRs, implementar uma evolução funcional e comprovar a esteira.
 
 ## Integrantes
-- Roberta (trabalho individual, fiz todas as etapas)
+- Roberta Albuquerque de Sá Furtado - 22552916 (trabalho individual, fiz todas as etapas)
 
 ## Arquitetura
 `Branch/PR -> CI (pytest + Docker build) -> merge main -> CI (publicação GHCR por SHA) -> CD (runner na EC2 + docker pull/run) -> /health`
@@ -37,7 +37,7 @@ curl http://localhost:8080/tasks
 ```
 
 ## Configuração AWS + GitHub
-Leia [docs/CONFIGURACAO.md](docs/CONFIGURACAO.md).
+Leia [docs/CONFIGURACAO.md](docs/CONFIGURACAO.md). O relatório do trabalho está em [docs/RELATORIO.md](docs/RELATORIO.md).
 
 ## Seu desafio
 1. Criar repositório próprio e configurar CI e CD reais na EC2.

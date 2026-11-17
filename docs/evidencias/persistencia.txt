@@ -1,0 +1,25 @@
+$ curl -X POST http://34.206.31.13/tasks -H 'Content-Type: application/json' -d '{"title":"tarefa antes do deploy do PR 2"}'
+{"done":false,"id":2,"title":"tarefa antes do deploy do PR 2"}
+$ docker ps --format '{{.ID}} {{.Image}}'
+b6256d9e017c ghcr.io/robertafurtado/cloud-tasks-api:6454d9e0338d803484e5db9fc01294d5a2d1ac62
+
+(merge do PR 2, a CD fez o deploy da imagem nova)
+
+$ docker ps --format "{{.ID}} {{.Image}}"
+7696106c1dce ghcr.io/robertafurtado/cloud-tasks-api:b4d8b188a16bac11085181e2223e1371b5f6420c
+$ curl -s localhost/tasks
+[{"done":false,"id":2,"title":"tarefa antes do deploy do PR 2"}]
+
+$ docker rm -f cloud-tasks-api
+cloud-tasks-api
+$ docker ps -a --format "{{.ID}} {{.Image}}"
+$ SKIP_PULL=1 bash scripts/deploy.sh ghcr.io/robertafurtado/cloud-tasks-api:b4d8b188a16bac11085181e2223e1371b5f6420c 2>&1 | tail -1
+Deploy succeeded: ghcr.io/robertafurtado/cloud-tasks-api:b4d8b188a16bac11085181e2223e1371b5f6420c
+$ docker ps --format "{{.ID}} {{.Image}}"
+b71773fc55e5 ghcr.io/robertafurtado/cloud-tasks-api:b4d8b188a16bac11085181e2223e1371b5f6420c
+$ curl -s localhost/tasks
+[{"done":false,"id":2,"title":"tarefa antes do deploy do PR 2"}]
+
+$ docker volume ls
+DRIVER    VOLUME NAME
+local     cloud-tasks-data

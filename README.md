@@ -26,6 +26,7 @@ Ou execute `docker compose up --build` e abra `http://localhost:8080/health`.
 | GET | `/tasks` | Lista tarefas |
 | POST | `/tasks` | Cria tarefa (`{"title":"..."}`) |
 | PATCH | `/tasks/<id>` | Atualiza conclusão (`{"done":true}`) |
+| DELETE | `/tasks/<id>` | Apaga a tarefa (204, ou 404 se não existir) |
 
 Exemplos:
 ```bash
